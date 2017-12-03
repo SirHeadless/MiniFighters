@@ -1,6 +1,5 @@
-package com.sirheadless.units;
+package com.sirheadless.battle.armies.army.units;
 
-import com.sirheadless.util.Position;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,25 +8,33 @@ import org.junit.runners.Parameterized;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(value = Parameterized.class)
 public class UnitTest {
 
-    private Class ClassToTest;
+    private Class classToTest;
 
     private Unit testInstance;
 
-    public UnitTest(Class ClassToTest){
-        this.ClassToTest = ClassToTest;
+    public UnitTest(Class classToTest) {
+        this.classToTest = classToTest;
+    }
+
+    @Parameterized.Parameters
+    public static Collection classesForWhichToRunTheTests() {
+        Object[] classes = new Object[]{Runner.class, Bummer.class};
+        return Arrays.asList(classes);
     }
 
     @Before
     public void setup() throws NoSuchMethodException {
-        Constructor c = ClassToTest.getConstructor();
+        Constructor c = classToTest.getConstructor(UUID.class);
         try {
-            this.testInstance = (Unit) c.newInstance();
+            this.testInstance = (Unit) c.newInstance(UUID.randomUUID());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,20 +47,13 @@ public class UnitTest {
 
     @Test
     public void should_haveOutOfBoardPosition_when_instantiated(){
-        assertEquals(testInstance.getPosition(), Position.NOT_ON_BOARD);
+        assertEquals(testInstance.getPosition(), null);
     }
 
     @Test
     public void should_haveRangesHigherEqualsNull_when_instantiated(){
         assertTrue(testInstance.getFireRange() >= 0);
         assertTrue(testInstance.getMoveRange() >= 0);
-    }
-
-
-    @Parameterized.Parameters
-    public static Collection classesForWhichToRunTheTests(){
-        Object[] classes = new Object[] {Runner.class, Bummer.class};
-        return Arrays.asList(classes);
     }
 
 

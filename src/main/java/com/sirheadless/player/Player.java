@@ -1,12 +1,20 @@
 package com.sirheadless.player;
 
-import com.sirheadless.units.Unit;
-
-import java.util.List;
+import java.util.UUID;
 
 public interface Player {
 
-    List<Unit> getAllUnits();
+    UUID getUUId();
+
+    Object getColor();
+
+    float getDeposit();
+
+    void setDeposit(float deposit);
+
+    void withdrawCredit(float amount);
+
+    void transferCredit(float amount);
 
 
 }

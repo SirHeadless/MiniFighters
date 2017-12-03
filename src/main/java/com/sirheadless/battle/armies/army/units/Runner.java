@@ -1,14 +1,18 @@
-package com.sirheadless.units;
+package com.sirheadless.battle.armies.army.units;
 
 import com.sirheadless.util.Position;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.UUID;
+
 @Data
 public class Runner implements Unit {
 
+    @NonNull
+    private final UUID UUId;
     @NonNull private final String name = "Runner";
-    @NonNull private Position position = Position.NOT_ON_BOARD;
+    private Position position;
     @NonNull private final int moveRange = 3;
     @NonNull private final int fireRange = 1;
 
